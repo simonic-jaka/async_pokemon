@@ -1,9 +1,9 @@
 import aiohttp
 import asyncio
-import time
-start_time = time.time()
 
+from utils import async_elapsed_timer
 
+@async_elapsed_timer
 async def main():
 
     async with aiohttp.ClientSession() as session:
@@ -16,4 +16,3 @@ async def main():
                 print(pokemon['name'], number)
 
 asyncio.run(main())
-print("--- %s seconds ---" % (time.time() - start_time))

@@ -1,14 +1,16 @@
 import requests
-import time
-from itertools import count
+from utils import elapsed_timer
 
-start_time = time.time()
-s = requests.Session()
-s.headers['Content-Type'] = ' application/vnd.api+json.'
-for number in count(1):
-    url = f'https://pokeapi.co/api/v2/pokemon/{number}'
-    resp = s.get(url, headers={'Content-Type' : 'application/vnd.api+json'})
-    pokemon = resp.json()
-    print(pokemon['name'], number)
-s.close()
-print("--- %s seconds ---" % (time.time() - start_time))
+
+@elapsed_timer
+def main():
+    s = requests.Session()
+    for number in range(1,15):
+        url = f'https://pokeapi.co/api/v2/pokemon/{number}'
+        resp = s.get(url)
+        pokemon = resp.json()
+        print(pokemon['name'], number)
+    s.close()
+
+if __name__ == "__main__":
+    main()
