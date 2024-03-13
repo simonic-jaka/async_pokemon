@@ -4,18 +4,19 @@ from asyncio import Queue
 
 from utils import async_elapsed_timer
 
+MAX_WORKERS = 10
 MAX_REQUESTS = 50
 TIME_PERIOD = 1
 FETCH_SIZE = 1026
 
 
-async def url_producer(max_index, queue):
+async def url_producer(max_index, max_requests, queue):
     index = 1
     run = True
 
     while run:
         pending = queue.qsize()
-        vaccant = MAX_REQUESTS - pending
+        vaccant = max_requests - pending
 
         tmp_index = index + vaccant
         if tmp_index >= max_index:
@@ -51,11 +52,10 @@ async def main():
         queue = Queue()
 
         workers = [
-            asyncio.create_task(get_pokemon(session, queue))
-            for _ in range(MAX_REQUESTS)
+            asyncio.create_task(get_pokemon(session, queue)) for _ in range(MAX_WORKERS)
         ]
 
-        await asyncio.create_task(url_producer(FETCH_SIZE, queue))
+        await asyncio.create_task(url_producer(FETCH_SIZE, MAX_REQUESTS, queue))
 
         await queue.join()
 

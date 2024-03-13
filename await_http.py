@@ -9,12 +9,12 @@ async def main():
 
     async with aiohttp.ClientSession() as session:
 
-        for number in range(1, 15):
-            pokemon_url = f"https://pokeapi.co/api/v2/pokemon/{number}"
+        for index in range(1, 15):
+            pokemon_url = f"https://pokeapi.co/api/v2/pokemon/{index}"
             async with session.get(pokemon_url) as resp:
                 pokemon = await resp.json()
 
-                print(pokemon["name"], number)
+                print(pokemon["name"], index)
 
 
 asyncio.run(main())
