@@ -30,7 +30,10 @@ def async_elapsed_timer(func):
 
 def print_ports(req, **kwargs):
     RED = "\033[91m {}\033[00m"
+
     s = socket.fromfd(req.raw.fileno(), socket.AF_INET, socket.SOCK_STREAM)
+
     des_port = s.getpeername()[1]
     src_port = s.getsockname()[1]
+
     print(RED.format(src_port), des_port)

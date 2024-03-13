@@ -5,7 +5,7 @@ from asyncio import Queue
 from utils import async_elapsed_timer
 
 MAX_WORKERS = 10
-MAX_REQUESTS = 50
+REQUESTS_PER_PERIOD = 50
 TIME_PERIOD = 1
 FETCH_SIZE = 1026
 
@@ -55,7 +55,7 @@ async def main():
             asyncio.create_task(get_pokemon(session, queue)) for _ in range(MAX_WORKERS)
         ]
 
-        await asyncio.create_task(url_producer(FETCH_SIZE, MAX_REQUESTS, queue))
+        await asyncio.create_task(url_producer(FETCH_SIZE, REQUESTS_PER_PERIOD, queue))
 
         await queue.join()
 
