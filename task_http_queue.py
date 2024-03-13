@@ -18,16 +18,16 @@ async def url_producer(max_index, max_requests, queue):
         pending = queue.qsize()
         vaccant = max_requests - pending
 
-        tmp_index = index + vaccant
-        if tmp_index >= max_index:
-            tmp_index = max_index
+        upper_index = index + vaccant
+        if upper_index >= max_index:
+            upper_index = max_index
             run = False
 
-        for url_index in range(index, tmp_index):
-            url = f"https://pokeapi.co/api/v2/pokemon/{url_index}"
-            await queue.put((url, url_index))
+        for pokemon_index in range(index, upper_index):
+            pokemon_url = f"https://pokeapi.co/api/v2/pokemon/{pokemon_index}"
+            await queue.put((pokemon_url, pokemon_index))
 
-        index = tmp_index
+        index = upper_index
 
         if run:
             await asyncio.sleep(TIME_PERIOD)

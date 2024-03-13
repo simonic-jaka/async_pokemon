@@ -16,9 +16,11 @@ async def main():
     async with aiohttp.ClientSession() as session:
 
         tasks = []
-        for index in range(1, 151):
-            url = f"https://pokeapi.co/api/v2/pokemon/{index}"
-            tasks.append(asyncio.create_task(get_pokemon(session, url, index)))
+        for pokemon_index in range(1, 151):
+            pokemon_url = f"https://pokeapi.co/api/v2/pokemon/{pokemon_index}"
+            tasks.append(
+                asyncio.create_task(get_pokemon(session, pokemon_url, pokemon_index))
+            )
 
         await asyncio.gather(*tasks)
 

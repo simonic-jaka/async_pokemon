@@ -8,11 +8,11 @@ def main():
     s.hooks["response"].append(print_ports)
 
     try:
-        for number in range(1, 15):
-            url = f"https://pokeapi.co/api/v2/pokemon/{number}"
-            resp = s.get(url)
+        for pokemon_index in range(1, 15):
+            pokemon_url = f"https://pokeapi.co/api/v2/pokemon/{pokemon_index}"
+            resp = s.get(pokemon_url)
             pokemon = resp.json()
-            print(pokemon["name"], number)
+            print(pokemon["name"], pokemon_index)
     except:
         pass
     finally:

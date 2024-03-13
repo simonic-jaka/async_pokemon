@@ -20,10 +20,10 @@ async def main():
         semaphore: Semaphore = Semaphore(MAX_WORKERS)
 
         tasks = []
-        for index in range(1, 151):
-            url = f"https://pokeapi.co/api/v2/pokemon/{index}"
+        for pokemon_index in range(1, 151):
+            url = f"https://pokeapi.co/api/v2/pokemon/{pokemon_index}"
             tasks.append(
-                asyncio.create_task(get_pokemon(session, semaphore, url, index))
+                asyncio.create_task(get_pokemon(session, semaphore, url, pokemon_index))
             )
 
         await asyncio.gather(*tasks)
